@@ -15,14 +15,20 @@ namespace Lista_de_Tarefas.Controllers
             _context = context;
         }
 
-        [HttpGet("statuss/{nome}")]
-        public IActionResult ConsultarPessoaId(string nome)
+
+        [HttpGet("{Id}")]
+        public IActionResult ConsultarPessoaId(int id, Tarefa tarefa)
         {
-            var tarefaDoBanco = _context.Tarefas.Where(t => t.Statuss.Contains(nome)).ToList();
+
+            var idPessoa = HttpContext.Session.GetString("email");
+            if (idPessoa == null) return Unauthorized("não autorizado");
+
+            var tarefaDoBanco = _context.Tarefas.Where(t => t.Id.Equals(id)).ToList();
             if (!tarefaDoBanco.Any())
                 return NotFound("Não encontrada");
             return Ok(tarefaDoBanco);
         }
+
 
         [HttpPost("Cadastrar")]
         public IActionResult CriarTarefas(Tarefa tarefa)
@@ -42,9 +48,13 @@ namespace Lista_de_Tarefas.Controllers
             return Created("Teste", tarefa);
         }
 
+
         [HttpPut("Atualizar/{id}")]
         public IActionResult AtualizarTarefa(int id, Tarefa tarefa)
         {
+            var idPessoa = HttpContext.Session.GetString("email");
+            if (idPessoa == null) return Unauthorized("não autorizado");
+
             var TarefaDoBanco = _context.Tarefas.Find(id);
 
             if (TarefaDoBanco == null)
@@ -58,9 +68,13 @@ namespace Lista_de_Tarefas.Controllers
             return Ok("Atualizado");
         }
 
+
         [HttpDelete("Deletar/{id}")]
         public IActionResult DeletarPessoas(int id)
         {
+            var idPessoa = HttpContext.Session.GetString("email");
+            if (idPessoa == null) return Unauthorized("não autorizado");
+
             var tarefa = _context.Pessoas.Find(id);
 
             if (tarefa == null)

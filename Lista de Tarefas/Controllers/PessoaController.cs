@@ -15,14 +15,30 @@ namespace Lista_de_Tarefas.Controllers
             _context = context;
         }
 
-
-        [HttpPost("Cadastrar")]
-        public IActionResult CriarPessoas(Pessoa pessoa)
+        [HttpPost("login")]
+        public IActionResult Login(Pessoa dadosLogin)
         {
-            _context.Add(pessoa);
-            _context.SaveChanges();
-            return Created("Teste", pessoa);
+            var loginU = _context.Pessoas.Where(u => u.Email.Equals(dadosLogin.Email) && u.Senha.Equals(dadosLogin.Senha)).ToList();
+
+
+            if (loginU.Count == 0)
+
+                return Unauthorized("Email ou Senha Incorretas");
+            HttpContext.Session.SetString("email", dadosLogin.Email);
+            Response.Cookies.Append("Idusado", loginU[0].Id.ToString(),
+
+            new CookieOptions
+            {
+                Expires = DateTime.Now.AddMinutes(30),
+                Secure = true,
+                HttpOnly = true
+            });
+
+
+            return Ok("Login realizado com sucesso!");
         }
+
+
 
         [HttpPut("Atualizar/{id}")]
         public IActionResult AtualizarPessoas(int id, Pessoa pessoa)
@@ -39,31 +55,6 @@ namespace Lista_de_Tarefas.Controllers
 
             return Ok("Atualizado");
         }
-
-
-        [HttpPost("login")]
-        public IActionResult Login(Pessoa dadosLogin)
-        {
-            var loginU = _context.Pessoas.Where(u => u.Email.Equals (dadosLogin.Email) && u.Senha.Equals (dadosLogin.Senha)).ToList();
-
-            
-              if (loginU.Count == 0)
-
-                return Unauthorized("Email ou Senha Incorretas");
-                HttpContext.Session.SetString("email", dadosLogin.Email);
-                Response.Cookies.Append("Idusado", loginU[0].Id.ToString(),
-       
-                new CookieOptions
-                {
-                    Expires = DateTime.Now.AddMinutes(30),
-                    Secure = true,
-                    HttpOnly = true
-                });
-            
-
-            return Ok("Login realizado com sucesso!");
-        }
-
 
 
 

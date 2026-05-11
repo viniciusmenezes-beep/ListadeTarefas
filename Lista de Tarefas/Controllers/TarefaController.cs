@@ -21,7 +21,7 @@ namespace Lista_de_Tarefas.Controllers
             var resultado =
                 from p in _context.Pessoas
                 join t in _context.Tarefas
-                on p.Id equals t.IdPessoa
+                on p.Id equals t.IdPessoas
                 where p.Id == idPessoa
 
                 select new

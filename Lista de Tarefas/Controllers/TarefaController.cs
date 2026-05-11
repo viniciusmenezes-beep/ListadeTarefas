@@ -15,6 +15,26 @@ namespace Lista_de_Tarefas.Controllers
             _context = context;
         }
 
+        [HttpGet("reservas/{idPessoa}")]
+        public IActionResult ReservasCliente(int idPessoa)
+        {
+            var resultado =
+                from p in _context.Pessoas
+                join t in _context.Tarefas
+                on p.Id equals t.IdPessoa
+                where p.Id == idPessoa
+
+                select new
+                {
+                    Pessoa = p.Nome, p.Email,
+
+                    Tarefa = t.Descricao, t.Statuss,
+                   
+                };
+
+            return Ok(resultado.ToList());
+        }
+
 
         [HttpGet("{Id}")]
         public IActionResult ConsultarPessoaId(int id, Tarefa tarefa)

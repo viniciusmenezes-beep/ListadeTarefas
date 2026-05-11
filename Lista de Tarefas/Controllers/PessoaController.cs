@@ -83,17 +83,6 @@ namespace Lista_de_Tarefas.Controllers
         }
 
 
-
-        [HttpGet("statuss/{nome}")]
-        public IActionResult ConsultarPessoaId(string nome)
-        {
-            var pessoasDoBanco = _context.Pessoas.Where(p => p.Nome.Contains(nome)).ToList();
-            if (!pessoasDoBanco.Any())
-                return NotFound("Não encontrada");
-            return Ok(pessoasDoBanco);
-        }
-
-
         [HttpDelete("Deletar/{id}")]
         public IActionResult DeletarPessoas(int id)
         {

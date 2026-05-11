@@ -38,7 +38,13 @@ namespace Lista_de_Tarefas.Controllers
             return Ok("Login realizado com sucesso!");
         }
 
-
+        [HttpPost]
+        public IActionResult CadastraCliente(Pessoa pessoa)
+        {
+            _context.Add(pessoa);
+            _context.SaveChanges();
+            return Created("", pessoa);
+        }
 
         [HttpPut("Atualizar/{id}")]
         public IActionResult AtualizarPessoas(int id, Pessoa pessoa)

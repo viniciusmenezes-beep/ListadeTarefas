@@ -46,6 +46,20 @@ namespace Lista_de_Tarefas.Controllers
             return Created("", pessoa);
         }
 
+
+
+        [HttpPost("logout")]
+
+        public IActionResult logout() 
+        {
+            HttpContext.Session.Clear();
+            Response.Cookies.Delete("Idusado");
+
+            return Ok("Logout realizado com sucesso!");
+        }
+
+
+
         [HttpPut("Atualizar/{id}")]
         public IActionResult AtualizarPessoas(int id, Pessoa pessoa)
         {

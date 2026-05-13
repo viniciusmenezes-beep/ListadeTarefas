@@ -18,6 +18,17 @@ namespace Lista_de_Tarefas.Controllers
         [HttpGet("reservas/{idPessoa}")]
         public IActionResult ReservasCliente(int idPessoa)
         {
+
+
+            var UsuarioLogado = HttpContext.Session.GetString("idLogado");
+            if (UsuarioLogado == null)
+            {
+                return Unauthorized("Faça login antes!");
+            }
+
+            var idUsuarioLogado = Request.Cookies["idLogado"];
+            if (idUsuarioLogado != null) { 
+
             var resultado =
                 from p in _context.Pessoas
                 join t in _context.Tarefas
@@ -33,7 +44,11 @@ namespace Lista_de_Tarefas.Controllers
                 };
 
             return Ok(resultado.ToList());
-        }
+            }
+
+            return Unauthorized("Faça login antes!");
+
+        } 
 
 
         [HttpGet("{Id}")]

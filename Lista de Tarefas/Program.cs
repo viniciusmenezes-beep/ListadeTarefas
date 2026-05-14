@@ -12,6 +12,8 @@ builder.Services.AddSession(options =>
 });
 // Add services to the container.
 
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -20,8 +22,23 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<PessoaContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirTudo", policy =>
+    {
+        policy.AllowAnyOrigin()  // Permite qualquer origem
+              .AllowAnyHeader()  // Permite qualquer cabeçalho
+              .AllowAnyMethod(); // Permite qualquer método (GET, POST, etc.)
+    });
+});
+
+
 var app = builder.Build();
 
+
+// 2. Habilitar o Middleware CORS (deve ser antes de UseAuthorization)
+app.UseCors("PermitirTudo");
 
 app.UseSession();
 

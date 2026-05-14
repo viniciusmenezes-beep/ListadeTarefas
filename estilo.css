@@ -1,0 +1,58 @@
+body{
+
+    font-family: 'Times New Roman', Times, serif;
+    background-color: azure;
+}
+
+
+
+h1{
+color: darkgray;
+display: flex;
+text-align: center;
+justify-content: center;
+}
+
+.ajuste{
+display: flex;
+text-align: center;
+justify-content: center;
+height: 100vh;
+}
+
+.campoo{
+    background: rgb(255, 255, 255);
+    height: 70%;
+    width: 70%;
+    border-radius: 30px;
+    box-shadow: 1px 3px 10px rgb(196, 196, 196);
+    
+}
+
+.campo{
+  display: flex;
+text-align: center;
+justify-content: center;
+    margin-bottom: 15px;
+    position: relative
+}
+
+.campo input{
+    display: block;
+    margin-bottom: 5px;
+    font-weight:bold ;
+    text-align: left;
+}
+
+.campo input{
+  width: 30%;
+  padding: 10px;
+  margin-bottom: 8px;
+  height: 15px;
+    
+  border-radius: 20px;
+  border: 1px solid #005CAA;
+  outline: 0;
+  font-size: 1rem;
+
+}

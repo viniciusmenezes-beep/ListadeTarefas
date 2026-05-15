@@ -2,8 +2,9 @@ const myForm = document.getElementById('cadastrar');
 myForm.addEventListener('submit', function (event) {
    
     event.preventDefault();
-       fetch('http://localhost:5098/pessoa', {
+       fetch('https://localhost:7095/pessoa', {
         method: 'POST', 
+        credentials:'include',
         headers: {
             'Content-Type': 'application/json',
         },

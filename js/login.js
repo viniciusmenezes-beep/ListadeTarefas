@@ -4,23 +4,26 @@ myForm.addEventListener('submit', function (event) {
 
     event.preventDefault();
 
-    fetch('http://localhost:5098/pessoa/login', {
+    fetch('https://localhost:7095/pessoa/login', {
         method: 'POST',
+        credentials:'include',
         headers: {
             'Content-Type': 'application/json',
         },
 
         body: JSON.stringify({
+            nome:"vini",
             email: document.getElementById("email").value,
-             senha: document.getElementById("senha").value,
+            senha: document.getElementById("senha").value
         }),
     })
 
-    .then(response => response.json())
+    .then(response => response.text())
         .then(data => {
-            window.location.href="index.html";
+          
+             window.location.href="index.html";
         })
-      window
+    
     });
 
 

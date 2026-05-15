@@ -29,9 +29,10 @@ namespace Lista_de_Tarefas.Controllers
 
             new CookieOptions
             {
-                Expires = DateTime.Now.AddMinutes(30),
+               
+                HttpOnly = true,
                 Secure = true,
-                HttpOnly = true
+                SameSite = SameSiteMode.None
             });
 
 

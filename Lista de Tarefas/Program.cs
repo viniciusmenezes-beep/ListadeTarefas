@@ -6,9 +6,11 @@ builder.Services.AddDistributedMemoryCache(); // Necessário para armazenar a ses
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Tempo de expiração
-    options.Cookie.HttpOnly = true; // Segurança
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 // Add services to the container.
 
@@ -27,9 +29,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirTudo", policy =>
     {
-        policy.AllowAnyOrigin()  // Permite qualquer origem
-              .AllowAnyHeader()  // Permite qualquer cabeçalho
-              .AllowAnyMethod(); // Permite qualquer método (GET, POST, etc.)
+        policy.WithOrigins("http://127.0.0.1:5500;", "http://localhost:5500;")
+              .AllowAnyHeader() 
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 
@@ -37,17 +40,15 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 
-// 2. Habilitar o Middleware CORS (deve ser antes de UseAuthorization)
-app.UseCors("PermitirTudo");
-
-app.UseSession();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+
+app.UseCors("permitirtudo");
 
 app.UseHttpsRedirection();
 

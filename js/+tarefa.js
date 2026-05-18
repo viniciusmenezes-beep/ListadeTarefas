@@ -19,6 +19,9 @@ myForm.addEventListener('submit', function (event) {
             console.log("Sucesso:", data);
             alert("Conta criada com sucesso!");
             myForm.reset();
-            limparBordas();
     })
 });
+
+
+
+

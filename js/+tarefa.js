@@ -14,11 +14,11 @@ myForm.addEventListener('submit', function (event) {
            
         }),
     }).
-        then(response => response.json())
+        then(response => response.text())
             .then(data => {
             console.log("Sucesso:", data);
             alert("Conta criada com sucesso!");
-            formProduto.reset();
+            myForm.reset();
             limparBordas();
     })
 });

@@ -15,25 +15,25 @@ namespace Lista_de_Tarefas.Controllers
             _context = context;
         }
 
-        [HttpGet("reservas/{idPessoa}")]
-        public IActionResult ReservasCliente(int idPessoa)
+        [HttpGet("reservas")]
+        public IActionResult ReservasCliente()
         {
 
 
-            var UsuarioLogado = HttpContext.Session.GetString("idLogado");
+            var UsuarioLogado = HttpContext.Session.GetString("email");
             if (UsuarioLogado == null)
             {
                 return Unauthorized("Faça login antes!");
             }
 
-            var idUsuarioLogado = Request.Cookies["idLogado"];
+            var idUsuarioLogado = Request.Cookies["Idusado"];
             if (idUsuarioLogado != null) { 
 
             var resultado =
                 from p in _context.Pessoas
                 join t in _context.Tarefas
                 on p.Id equals t.IdPessoas
-                where p.Id == idPessoa
+                where p.Id == int.Parse(idUsuarioLogado)
 
                 select new
                 {

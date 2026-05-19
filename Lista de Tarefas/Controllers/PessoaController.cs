@@ -50,12 +50,11 @@ namespace Lista_de_Tarefas.Controllers
 
 
         [HttpPost("logout")]
-
         public IActionResult logout() 
         {
             HttpContext.Session.Clear();
             Response.Cookies.Delete("Idusado");
-
+            Response.Cookies.Delete(".AspNetCore.Session");
             return Ok("Logout realizado com sucesso!");
         }
 

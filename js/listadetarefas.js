@@ -1,7 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
    
-    fetch('https://localhost:7095/tarefa/Amostrar/',{  credentials:"include"
+    fetch('https://localhost:7095/tarefa/reservas/',{  credentials:"include"
 })
 
      
@@ -30,8 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </ul>
     `;
 }
-    var resposta = document.getElementById("nome");
-           resposta.innerHTML =data[0].pessoa;         
+     
         })
 
 

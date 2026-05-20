@@ -24,16 +24,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 
                 <input 
                     type="text" 
-                    id="descricao${data[i].id}"
+                    id="Descricao${data[i].id}"
                     value="${data[i].tarefa}"
                 >
+                status:
+                 <input 
+                    type="text" 
+                    id="Statuss${data[i].id}"
+                    value="${data[i].statuss}"
+                >
 
-                <select>
-                    <option disabled selected>Status</option>
-                    <option>Afazer</option>
-                    <option>Feito</option>
-                </select>
-
+        
                 <button onclick="apagarTarefa(${data[i].id})">
                     apagar
                 </button>
@@ -48,8 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         var nome = document.getElementById("nome");
-
-        nome.innerHTML = "Olá " + data[0].pessoa+ " <button id='Logout'>Sair</button>";
+        nome.innerHTML = "Olá " + data[0].pessoa + 
+        "    ";
 
     });
 
@@ -57,20 +58,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function apagarTarefa(id) {
 
-    fetch('https://localhost:7095/tarefa/' + id, {
+    console.log(id);
+
+    fetch('https://localhost:7095/tarefa/Deletar/' + id, {
 
         method: "DELETE",
         credentials: "include"
 
     })
 
-    .then();
+    .then(async response => {
+
+        console.log(response.status);
+
+        const texto = await response.text();
+
+        console.log(texto);
+
+        if(response.ok){
+            location.reload();
+        }
+
+    })
+
+    .catch(error => console.log(error));
 
 }
 
-function editarReserva(idTarefa) {
 
-    fetch('https://localhost:7095/tarefa/' + idTarefa, {
+
+function editarReserva(idTarefa) {
+console.log(idTarefa);
+    fetch('https://localhost:7095/tarefa/Atualizar/' + idTarefa, {
 
         method: 'PUT',
 
@@ -82,7 +101,8 @@ function editarReserva(idTarefa) {
 
         body: JSON.stringify({
 
-            descricao: document.getElementById("descricao" + idTarefa).value,
+            descricao: document.getElementById("Descricao"+idTarefa).value,
+            statuss: document.getElementById("Statuss"+idTarefa).value
 
         }),
 
@@ -90,12 +110,15 @@ function editarReserva(idTarefa) {
 
     .then(response => response.text())
 
-    .then(data => {
+  
 
-        console.log(data);
+}
 
-        location.reload();
-
-    });
-
+function logout() {
+    fetch('https://localhost:7095/pessoa/logout/', { 
+        credentials: 'include' })
+        .then(response => {
+            console.log(response);
+            window.location.href = "login.html"
+        })
 }

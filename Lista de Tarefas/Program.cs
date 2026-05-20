@@ -36,9 +36,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {
@@ -46,12 +44,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
 
 app.UseCors("PermitirTudo");
 
 app.UseSession();
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

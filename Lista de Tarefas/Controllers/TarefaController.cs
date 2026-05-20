@@ -39,7 +39,7 @@ namespace Lista_de_Tarefas.Controllers
                 {
                     Pessoa = p.Nome, p.Email,
 
-                    Tarefa = t.Descricao, t.Statuss,
+                    Tarefa = t.Descricao, t.Statuss, t.Id
                    
                 };
 
@@ -112,12 +112,12 @@ namespace Lista_de_Tarefas.Controllers
             var idPessoa = HttpContext.Session.GetString("email");
             if (idPessoa == null) return Unauthorized("não autorizado");
 
-            var tarefa = _context.Pessoas.Find(id);
+            var tarefa = _context.Tarefas.Find(id);
 
             if (tarefa == null)
                 return NotFound("Tarefa não encontarda");
 
-            _context.Pessoas.Remove(tarefa);
+            _context.Tarefas.Remove(tarefa);
             _context.SaveChanges();
 
 
